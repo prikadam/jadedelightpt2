@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Jade Delight</title>
+</head>
+
+<body>
+<script>
+
+function MenuItem(name, cost)
+{
+	this.name = name;
+	this.cost=cost;
+}
+
+menuItems = new Array(
+	new MenuItem("Chicken Chop Suey", 4.5),
+	new MenuItem("Sweet and Sour Pork", 6.25),
+	new MenuItem("Shrimp Lo Mein", 6.25),
+	new MenuItem("Moo Shi Chicken", 7.5),
+	new MenuItem("Fried Rice", 2.85)
+);
+
+function makeSelect(name, minRange, maxRange)
+{
+	var t= "";
+	t = "<select name='" + name + "' size='1'>";
+	for (j=minRange; j<=maxRange; j++)
+	   t += "<option>" + j + "</option>";
+	t+= "</select>"; 
+	return t;
+}
+
+function td(content, className="")
+{
+	return "<td class = '" + className + "'>" + content + "</td>";
+}
+	
+</script>
+
+<h1>Jade Delight</h1>
+<form name="detailsform" method="post">
+
+<p class="userInfo"><label>First Name:</label> <input type="text"  name='fname' /></p>
+<p class="userInfo"><label>Last Name*</label>:  <input type="text"  name='lname' /></p>
+<p class="userInfo address"><label>Street*</label>: <input type="text" name='street' /></p>
+<p class="userInfo address"><label>City*</label>: <input type="text" name='city' /></p>
+<p class="userInfo"><label>Phone*</label>: <input type="text"  name='phone' /></p>
+<p class="userInfo"><label>Email*</label>: <input type="text"  name='email' /></p>
+<p> 
+	<input type="radio"  name="p_or_d" value = "pickup" checked="checked"/>Pickup  
+	<input type="radio"  name='p_or_d' value = 'delivery'/>
+	Delivery
+</p>
+
+<?php 
+
+$servername = "localhost";
+$database = "dbc97gvzyxtmbm";
+$username = "ut9d8gbbelblk";
+$password = "GiorgiaGiannico";
+
+// Create connection
+
+$conn = mysqli_connect($servername, $username, $password, $database);
+
+// Check connection
+
+if ($conn->connect_error) {
+die("Connection failed: " . $conn->connect_error);
+}
+
+$conn->select_db($database);
+
+    
+$result = mysqli_query($conn,"SELECT * FROM JadeDelight");
+
+echo "<table border='1'>
+<form name='inputform' method='post'>
+<tr>
+<th>Quantity</th>
+<th>Item Name</th>
+<th>Cost</th>
+<th>Total Cost</th>
+
+</tr>";
+
+while($row = mysqli_fetch_array($result))
+{
+$itemName = $row['name'];
+$itemID = $row['ID'];
+
+echo "<tr>";
+echo "<td><select id='" . $itemID . "' name='" . $row['name'] . "size='1'>" . "<option value=0>0</option>" .
+"<option value=1>1</option>" . "<option value=2>2</option>" . "<option value=3>3</option>" .
+"<option value=4>4</option>" . "<option value=5>5</option>" . "<option value=6>6</option>" .
+"<option value=7>7</option>" . "<option value=8>8</option>" . "<option value=9>9</option>" .
+"<option value=10>10</option>" ."</td>";
+echo "<td>" . $row['name'] . "</td>";
+echo "<td>" . $row['cost'] . "</td>";
+echo "<td class='totCost" . $itemID . "'>" . $row['totalCost'] . "</td>";
+echo "</tr>";
+
+echo "<script type='text/javascript'> 
+var select = document.getElementById('" . $itemID . "');
+var value = select.options[select.selectedIndex].value;
+</script>";
+}
+
+echo "</form></table>";
+    ?>
+
+<script type="text/javascript">
+
+</script>
+
+<p class="subtotal totalSection"><label>Subtotal</label>: 
+   $ <input type="text"  name='subtotal' id="subtotal" />
+</p>
+<p class="tax totalSection"><label>Mass tax 6.25%:</label>
+  $ <input type="text"  name='tax' id="tax" />
+</p>
+<p class="total totalSection"><label>Total:</label> $ <input type="text"  name='total' id="total" />
+</p>
+
+<button type="button" value="Submit Order" onclick="formValidate()">Submit</button>
+
+<script type="text/javascript">
+function getCountOfDigits(str) {
+        return str.replace(/[^0-9]/g, '').length;
+    }
+
+function formValidate() {
+	let last = document.getElementsByName("lname")[0].value;
+   let city = document.getElementsByName("city")[0].value;
+   let street = document.getElementsByName("street")[0].value;
+   let phonenum = document.getElementsByName("phone")[0].value;
+   let count = getCountOfDigits(phonenum);
+   let total = document.getElementById("total").value;
+
+            // document.querySelectorAll('input[type=radio]').forEach(elem => {
+            // elem.addEventListener('click', addChecked);
+            // });
+            
+            
+            // let x = document.querySelectorAll('input[type=radio]:checked')[0].value;
+            
+            // var today = new Date();
+            // var hour = today.getHours();
+            // var minute = today.getMinutes();
+            
+            var totaltime;
+            
+            if (last == "") {
+                    alert("Please enter a last name");
+                    e.preventDefault();
+            } else if (phonenum == "") {
+                    alert("Please enter a phone number");
+                    e.preventDefault();
+            } else if (count != 10) {
+                    if (count != 7) {
+                            alert("Phone should have 7 or 10 digits");
+                            e.preventDefault();
+                    }
+            }
+
+}
+
+</script>
+
+</form>
+</body>
+</html>
