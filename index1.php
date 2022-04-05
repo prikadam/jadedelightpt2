@@ -1,22 +1,58 @@
 <?php
 
 $servername='localhost';
-$db='dbfnm4cje4m0wc';
-$username='ui1voejwwqits';
-$password='kxziga0bb909';
+$database='dbowyimgiludol';
+$username='uxwkt5fvpfkib';
+$password='4adtq1guzzth';
 
-$conn = mysqli_connect($servername, $username, $password, $db);
-# Init the MySQL Connection
+// Create connection
 
+$conn = mysqli_connect($servername, $username, $password, $database);
+
+// Check connection
 
 if ($conn->connect_error) {
 die("Connection failed: " . $conn->connect_error);
 }
 
-$conn->select_db($db);
+$conn->select_db($database);
 
     
 $result = mysqli_query($conn,"SELECT * FROM JadeDelight");
+
+echo "<table border='1'>
+<form name='inputform' method='post'>
+<tr>
+<th>Quantity</th>
+<th>Item Name</th>
+<th>Cost</th>
+<th>Total Cost</th>
+
+</tr>";
+
+while($row = mysqli_fetch_array($result))
+{
+$itemName = $row['name'];
+$itemID = $row['ID'];
+
+echo "<tr>";
+echo "<td><select id='" . $itemID . "' name='" . $row['name'] . "size='1'>" . "<option value=0>0</option>" .
+"<option value=1>1</option>" . "<option value=2>2</option>" . "<option value=3>3</option>" .
+"<option value=4>4</option>" . "<option value=5>5</option>" . "<option value=6>6</option>" .
+"<option value=7>7</option>" . "<option value=8>8</option>" . "<option value=9>9</option>" .
+"<option value=10>10</option>" ."</td>";
+echo "<td>" . $row['name'] . "</td>";
+echo "<td>" . $row['cost'] . "</td>";
+echo "<td class='totCost" . $itemID . "'>" . $row['totalCost'] . "</td>";
+echo "</tr>";
+
+echo "<script type='text/javascript'> 
+var select = document.getElementById('" . $itemID . "');
+var value = select.options[select.selectedIndex].value;
+</script>";
+}
+
+echo "</form></table>";
 ?>
 
 <!DOCTYPE html>
