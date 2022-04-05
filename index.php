@@ -1,9 +1,9 @@
 <?php
 
 $servername='localhost';
-$db='dbyv0vxjezcgvt';
-$username='uiv6ccapc17yq';
-$password='esd556egjjt5';
+$db='dbfnm4cje4m0wc';
+$username='ui1voejwwqits';
+$password='kxziga0bb909';
 
 $conn = mysqli_connect($servername, $username, $password, $db);
 # Init the MySQL Connection
