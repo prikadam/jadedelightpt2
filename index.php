@@ -1,10 +1,10 @@
 <?php
 
 # Init the MySQL Connection
-if (!($db = mysql_connect('localhost', 'root', '')))
-    die('Failed to connect to MySQL Database Server - #' . mysql_errno() . ': ' . mysql_error());
-if (!mysql_select_db('jade_delight'))
-    die('Connected to Server, but Failed to Connect to Database - #' . mysql_errno() . ': ' . mysql_error());
+if (!($db = mysqli_connect('localhost', 'root', '')))
+    die('Failed to connect to MySQL Database Server - #' . mysqli_errno() . ': ' . mysqli_error());
+if (!mysqli_select_db('db9gnelqcxqkqf'))
+    die('Connected to Server, but Failed to Connect to Database - #' . mysqli_errno() . ': ' . mysqli_error());
 
 ?>
 
