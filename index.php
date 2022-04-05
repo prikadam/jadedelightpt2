@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 die("Connection failed: " . $conn->connect_error);
 }
 
-$conn->select_db($database);
+$conn->select_db($db);
 
     
 $result = mysqli_query($conn,"SELECT * FROM JadeDelight");
