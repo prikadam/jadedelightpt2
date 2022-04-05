@@ -1,22 +1,11 @@
 <?php
 
-$servername='localhost';
-$db='dbfnm4cje4m0wc';
-$username='ui1voejwwqits';
-$password='kxziga0bb909';
-
-$conn = mysqli_connect($servername, $username, $password, $db);
 # Init the MySQL Connection
+if (!($db = mysql_connect('localhost', 'root', '')))
+    die('Failed to connect to MySQL Database Server - #' . mysql_errno() . ': ' . mysql_error());
+if (!mysql_select_db('jade_delight'))
+    die('Connected to Server, but Failed to Connect to Database - #' . mysql_errno() . ': ' . mysql_error());
 
-
-if ($conn->connect_error) {
-die("Connection failed: " . $conn->connect_error);
-}
-
-$conn->select_db($db);
-
-    
-$result = mysqli_query($conn,"SELECT * FROM JadeDelight");
 ?>
 
 <!DOCTYPE html>
@@ -117,13 +106,13 @@ $result = mysqli_query($conn,"SELECT * FROM JadeDelight");
 
                     # Prepare the SELECT Query
                     $selectSQL = "SELECT * FROM `product`";
-                    $selectRes = mysqli_query($selectSQL);
-                    $count = mysqli_num_rows($selectRes);
+                    $selectRes = mysql_query($selectSQL);
+                    $count = mysql_num_rows($selectRes);
                     # Execute the SELECT Query
-                    if (!($selectRes = mysqli_query($selectSQL))) {
-                        echo "Retrieval of data from Database Failed - #" . mysqli_errno() . ': ' . mysqli_error();
+                    if (!($selectRes = mysql_query($selectSQL))) {
+                        echo "Retrieval of data from Database Failed - #" . mysql_errno() . ': ' . mysql_error();
                     } else {
-                        if (mysqli_num_rows($selectRes) == 0) {
+                        if (mysql_num_rows($selectRes) == 0) {
                 ?>
                     <tr>
                         <td colspan="4">No Rows Returned</td>
@@ -131,7 +120,7 @@ $result = mysqli_query($conn,"SELECT * FROM JadeDelight");
                     <?php
                         } else {
                             $i = 0;
-                            while ($row = mysqli_fetch_assoc($selectRes)) {
+                            while ($row = mysql_fetch_assoc($selectRes)) {
                                 array_push($productList, (object)[
                                     'name' => $row['name'],
                                     'cost' => $row['cost']
